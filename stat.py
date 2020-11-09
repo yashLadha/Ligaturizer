@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #
 # usage: fontforge -lang=py ligaturize.py <input file> <output file> [ligature file]
 #

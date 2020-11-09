@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #
 # usage: fontforge -lang=py ligaturize.py <input file> <output file> [ligature file]
 #
@@ -29,13 +28,13 @@ def get_ligature_source(fontname):
     for weight in ['Bold', 'Retina', 'Medium', 'Regular', 'Light']:
         if fontname.endswith('-' + weight.lower()):
             # Exact match for one of the Fira Code weights
-            return 'fonts/fira/distr/otf/FiraCode-%s.otf' % weight
+            return 'fonts/JetBrainsMono/fonts/otf/JetBrainsMono-%s.otf' % weight
 
     # No exact match. Guess that we want 'Bold' if the font name has 'bold' or
     # 'heavy' in it, and 'Regular' otherwise.
     if 'bold' in fontname or 'heavy' in fontname:
-        return 'fonts/fira/distr/otf/FiraCode-Bold.otf'
-    return 'fonts/fira/distr/otf/FiraCode-Regular.otf'
+        return 'fonts/JetBrainsMono/fonts/otf/JetBrainsMono-Bold.otf'
+    return 'fonts/JetBrainsMono/fonts/otf/JetBrainsMono-Bold.otf'
 
 class LigatureCreator(object):
 
