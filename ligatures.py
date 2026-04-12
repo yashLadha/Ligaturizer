@@ -71,10 +71,11 @@ ligatures = [
         'chars': ['asciitilde', 'at'],
         'firacode_ligature_name': 'asciitilde_at.liga',
     },
-    {   # ~=
-        'chars': ['asciitilde', 'equal'],
-        'firacode_ligature_name': 'asciitilde_equal.liga',
-    },
+    ## Removed in Fira Code v6:
+    # {   # ~=
+    #     'chars': ['asciitilde', 'equal'],
+    #     'firacode_ligature_name': 'asciitilde_equal.liga',
+    # },
     {   # ~>
         'chars': ['asciitilde', 'greater'],
         'firacode_ligature_name': 'asciitilde_greater.liga',
@@ -107,6 +108,10 @@ ligatures = [
         'chars': ['bar', 'bar'],
         'firacode_ligature_name': 'bar_bar.liga',
     },
+    {   # ||| (new in Fira Code v6)
+        'chars': ['bar', 'bar', 'bar'],
+        'firacode_ligature_name': 'bar_bar_bar.liga',
+    },
     {   # |||>
         'chars': ['bar', 'bar', 'bar', 'greater'],
         'firacode_ligature_name': 'bar_bar_bar_greater.liga',
@@ -114,6 +119,8 @@ ligatures = [
     {   # ||=
         'chars': ['bar', 'bar', 'equal'],
         'firacode_ligature_name': 'bar_bar_equal.liga',
+        'seq_components': ['bar_bar_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # ||>
         'chars': ['bar', 'bar', 'greater'],
@@ -122,6 +129,8 @@ ligatures = [
     {   # ||-
         'chars': ['bar', 'bar', 'hyphen'],
         'firacode_ligature_name': 'bar_bar_hyphen.liga',
+        'seq_components': ['bar_bar_hyphen_start.seq', 'hyphen_middle.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # |}
         'chars': ['bar', 'braceright'],
@@ -134,10 +143,14 @@ ligatures = [
     {   # |=
         'chars': ['bar', 'equal'],
         'firacode_ligature_name': 'bar_equal.liga',
+        'seq_components': ['bar_equal_start.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # |=>
         'chars': ['bar', 'equal', 'greater'],
         'firacode_ligature_name': 'bar_equal_greater.liga',
+        'seq_components': ['bar_equal_start.seq', 'greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # |>
         'chars': ['bar', 'greater'],
@@ -146,10 +159,14 @@ ligatures = [
     {   # |-
         'chars': ['bar', 'hyphen'],
         'firacode_ligature_name': 'bar_hyphen.liga',
+        'seq_components': ['bar_hyphen_start.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # |->
         'chars': ['bar', 'hyphen', 'greater'],
         'firacode_ligature_name': 'bar_hyphen_greater.liga',
+        'seq_components': ['bar_hyphen_start.seq', 'greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # {|
         'chars': ['braceleft', 'bar'],
@@ -179,14 +196,16 @@ ligatures = [
         'chars': ['colon', 'equal'],
         'firacode_ligature_name': 'colon_equal.liga',
     },
-    {   # :>
-        'chars': ['colon', 'greater'],
-        'firacode_ligature_name': 'colon_greater.liga',
-    },
-    {   # :<
-        'chars': ['colon', 'less'],
-        'firacode_ligature_name': 'colon_less.liga',
-    },
+    ## Removed in Fira Code v6:
+    # {   # :>
+    #     'chars': ['colon', 'greater'],
+    #     'firacode_ligature_name': 'colon_greater.liga',
+    # },
+    ## Removed in Fira Code v6:
+    # {   # :<
+    #     'chars': ['colon', 'less'],
+    #     'firacode_ligature_name': 'colon_less.liga',
+    # },
     {   # $>
         'chars': ['dollar', 'greater'],
         'firacode_ligature_name': 'dollar_greater.liga',
@@ -194,6 +213,8 @@ ligatures = [
     {   # =:=
         'chars': ['equal', 'colon', 'equal'],
         'firacode_ligature_name': 'equal_colon_equal.liga',
+        'seq_components': ['equal_start.seq', 'colon_equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # ==
         'chars': ['equal', 'equal'],
@@ -206,26 +227,38 @@ ligatures = [
     {   # ==>
         'chars': ['equal', 'equal', 'greater'],
         'firacode_ligature_name': 'equal_equal_greater.liga',
+        'seq_components': ['equal_start.seq', 'equal_middle.seq', 'greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # =!=
         'chars': ['equal', 'exclam', 'equal'],
         'firacode_ligature_name': 'equal_exclam_equal.liga',
+        'seq_components': ['equal_start.seq', 'exclam_equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # =>
         'chars': ['equal', 'greater'],
         'firacode_ligature_name': 'equal_greater.liga',
+        'seq_components': ['equal_start.seq', 'greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # =>>
         'chars': ['equal', 'greater', 'greater'],
         'firacode_ligature_name': 'equal_greater_greater.liga',
+        'seq_components': ['equal_start.seq', 'greater_greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # =<<
         'chars': ['equal', 'less', 'less'],
         'firacode_ligature_name': 'equal_less_less.liga',
+        'seq_components': ['equal_start.seq', 'less_less_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # =/=
         'chars': ['equal', 'slash', 'equal'],
         'firacode_ligature_name': 'equal_slash_equal.liga',
+        'seq_components': ['equal_start.seq', 'slash_equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # !=
         'chars': ['exclam', 'equal'],
@@ -243,10 +276,11 @@ ligatures = [
         'chars': ['exclam', 'exclam', 'period'],
         'firacode_ligature_name': 'exclam_exclam_period.liga',
     },
-    {   # >:
-        'chars': ['greater', 'colon'],
-        'firacode_ligature_name': 'greater_colon.liga',
-    },
+    ## Removed in Fira Code v6:
+    # {   # >:
+    #     'chars': ['greater', 'colon'],
+    #     'firacode_ligature_name': 'greater_colon.liga',
+    # },
     {   # >=
         'chars': ['greater', 'equal'],
         'firacode_ligature_name': 'greater_equal.liga',
@@ -254,6 +288,8 @@ ligatures = [
     {   # >=>
         'chars': ['greater', 'equal', 'greater'],
         'firacode_ligature_name': 'greater_equal_greater.liga',
+        'seq_components': ['greater_equal_start.seq', 'greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # >>
         'chars': ['greater', 'greater'],
@@ -262,6 +298,8 @@ ligatures = [
     {   # >>=
         'chars': ['greater', 'greater', 'equal'],
         'firacode_ligature_name': 'greater_greater_equal.liga',
+        'seq_components': ['greater_greater_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # >>>
         'chars': ['greater', 'greater', 'greater'],
@@ -270,14 +308,20 @@ ligatures = [
     {   # >>-
         'chars': ['greater', 'greater', 'hyphen'],
         'firacode_ligature_name': 'greater_greater_hyphen.liga',
+        'seq_components': ['greater_greater_hyphen_start.seq', 'hyphen_middle.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # >-
         'chars': ['greater', 'hyphen'],
         'firacode_ligature_name': 'greater_hyphen.liga',
+        'seq_components': ['greater_hyphen_start.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # >->
         'chars': ['greater', 'hyphen', 'greater'],
         'firacode_ligature_name': 'greater_hyphen_greater.liga',
+        'seq_components': ['greater_hyphen_start.seq', 'greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # -~
         'chars': ['hyphen', 'asciitilde'],
@@ -286,14 +330,20 @@ ligatures = [
     {   # -|
         'chars': ['hyphen', 'bar'],
         'firacode_ligature_name': 'hyphen_bar.liga',
+        'seq_components': ['hyphen_start.seq', 'bar_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # ->
         'chars': ['hyphen', 'greater'],
         'firacode_ligature_name': 'hyphen_greater.liga',
+        'seq_components': ['hyphen_start.seq', 'greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # ->>
         'chars': ['hyphen', 'greater', 'greater'],
         'firacode_ligature_name': 'hyphen_greater_greater.liga',
+        'seq_components': ['hyphen_start.seq', 'greater_greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # --
         'chars': ['hyphen', 'hyphen'],
@@ -302,18 +352,26 @@ ligatures = [
     {   # -->
         'chars': ['hyphen', 'hyphen', 'greater'],
         'firacode_ligature_name': 'hyphen_hyphen_greater.liga',
+        'seq_components': ['hyphen_start.seq', 'hyphen_middle.seq', 'greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # ---
         'chars': ['hyphen', 'hyphen', 'hyphen'],
         'firacode_ligature_name': 'hyphen_hyphen_hyphen.liga',
+        'seq_components': ['hyphen_start.seq', 'hyphen_middle.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # -<
         'chars': ['hyphen', 'less'],
         'firacode_ligature_name': 'hyphen_less.liga',
+        'seq_components': ['hyphen_start.seq', 'less_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # -<<
         'chars': ['hyphen', 'less', 'less'],
         'firacode_ligature_name': 'hyphen_less_less.liga',
+        'seq_components': ['hyphen_start.seq', 'less_less_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <~
         'chars': ['less', 'asciitilde'],
@@ -366,26 +424,38 @@ ligatures = [
     {   # <=
         'chars': ['less', 'equal'],
         'firacode_ligature_name': 'less_equal.liga',
+        'seq_components': ['less_equal_start.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <=|
         'chars': ['less', 'equal', 'bar'],
         'firacode_ligature_name': 'less_equal_bar.liga',
+        'seq_components': ['less_equal_start.seq', 'bar_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <==
         'chars': ['less', 'equal', 'equal'],
         'firacode_ligature_name': 'less_equal_equal.liga',
+        'seq_components': ['less_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <==>
         'chars': ['less', 'equal', 'equal', 'greater'],
         'firacode_ligature_name': 'less_equal_equal_greater.liga',
+        'seq_components': ['less_equal_start.seq', 'equal_middle.seq', 'greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <=>
         'chars': ['less', 'equal', 'greater'],
         'firacode_ligature_name': 'less_equal_greater.liga',
+        'seq_components': ['less_equal_start.seq', 'greater_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <=<
         'chars': ['less', 'equal', 'less'],
         'firacode_ligature_name': 'less_equal_less.liga',
+        'seq_components': ['less_equal_start.seq', 'less_equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <!--
         'chars': ['less', 'exclam', 'hyphen', 'hyphen'],
@@ -398,22 +468,32 @@ ligatures = [
     {   # <-
         'chars': ['less', 'hyphen'],
         'firacode_ligature_name': 'less_hyphen.liga',
+        'seq_components': ['less_hyphen_start.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <-|
         'chars': ['less', 'hyphen', 'bar'],
         'firacode_ligature_name': 'less_hyphen_bar.liga',
+        'seq_components': ['less_hyphen_start.seq', 'bar_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <->
         'chars': ['less', 'hyphen', 'greater'],
         'firacode_ligature_name': 'less_hyphen_greater.liga',
+        'seq_components': ['less_hyphen_start.seq', 'greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <--
         'chars': ['less', 'hyphen', 'hyphen'],
         'firacode_ligature_name': 'less_hyphen_hyphen.liga',
+        'seq_components': ['less_hyphen_start.seq', 'hyphen_middle.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <-<
         'chars': ['less', 'hyphen', 'less'],
         'firacode_ligature_name': 'less_hyphen_less.liga',
+        'seq_components': ['less_hyphen_start.seq', 'less_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <<
         'chars': ['less', 'less'],
@@ -422,14 +502,20 @@ ligatures = [
     {   # <<=
         'chars': ['less', 'less', 'equal'],
         'firacode_ligature_name': 'less_less_equal.liga',
+        'seq_components': ['less_less_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <<-
         'chars': ['less', 'less', 'hyphen'],
         'firacode_ligature_name': 'less_less_hyphen.liga',
+        'seq_components': ['less_less_hyphen_start.seq', 'hyphen_middle.seq', 'hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <<->>
         'chars': ['less', 'less', 'hyphen', 'greater', 'greater'],
         'firacode_ligature_name': 'less_less_hyphen_greater_greater.liga',
+        'seq_components': ['less_less_hyphen_start.seq', 'hyphen_middle.seq', 'greater_greater_hyphen_end.seq'],
+        'handled_by_seq': True,
     },
     {   # <<<
         'chars': ['less', 'less', 'less'],
@@ -443,10 +529,10 @@ ligatures = [
         'chars': ['less', 'plus', 'greater'],
         'firacode_ligature_name': 'less_plus_greater.liga',
     },
-    {   # </
-        'chars': ['less', 'slash'],
-        'firacode_ligature_name': 'less_slash.liga',
-    },
+    # {   # </
+    #     'chars': ['less', 'slash'],
+    #     'firacode_ligature_name': 'less_slash.liga',
+    # },
     {   # </>
         'chars': ['less', 'slash', 'greater'],
         'firacode_ligature_name': 'less_slash_greater.liga',
@@ -474,14 +560,17 @@ ligatures = [
     {   # ##
         'chars': ['numbersign', 'numbersign'],
         'firacode_ligature_name': 'numbersign_numbersign.liga',
+        'seq_components': ['numbersign_start.seq', 'numbersign_end.seq'],
     },
     {   # ###
         'chars': ['numbersign', 'numbersign', 'numbersign'],
         'firacode_ligature_name': 'numbersign_numbersign_numbersign.liga',
+        'seq_components': ['numbersign_start.seq', 'numbersign_middle.seq', 'numbersign_end.seq'],
     },
     {   # ####
         'chars': ['numbersign', 'numbersign', 'numbersign', 'numbersign'],
         'firacode_ligature_name': 'numbersign_numbersign_numbersign_numbersign.liga',
+        'seq_components': ['numbersign_start.seq', 'numbersign_middle.seq', 'numbersign_middle.seq', 'numbersign_end.seq'],
     },
     {   # #(
         'chars': ['numbersign', 'parenleft'],
@@ -505,11 +594,11 @@ ligatures = [
     },
     {   # .=
         'chars': ['period', 'equal'],
-        'firacode_ligature_name': 'period_equal.liga',
+        'firacode_ligature_name': 'period_equal.cv32',
     },
     {   # .-
         'chars': ['period', 'hyphen'],
-        'firacode_ligature_name': 'period_hyphen.liga',
+        'firacode_ligature_name': 'period_hyphen.cv25',
     },
     {   # ..
         'chars': ['period', 'period'],
@@ -543,10 +632,11 @@ ligatures = [
         'chars': ['plus', 'plus', 'plus'],
         'firacode_ligature_name': 'plus_plus_plus.liga',
     },
-    {   # ?:
-        'chars': ['question', 'colon'],
-        'firacode_ligature_name': 'question_colon.liga',
-    },
+    ## Removed in Fira Code v6:
+    # {   # ?:
+    #     'chars': ['question', 'colon'],
+    #     'firacode_ligature_name': 'question_colon.liga',
+    # },
     {   # ?=
         'chars': ['question', 'equal'],
         'firacode_ligature_name': 'question_equal.liga',
@@ -574,15 +664,19 @@ ligatures = [
     {   # /=
         'chars': ['slash', 'equal'],
         'firacode_ligature_name': 'slash_equal.liga',
+        'seq_components': ['slash_equal_start.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
     {   # /==
         'chars': ['slash', 'equal', 'equal'],
         'firacode_ligature_name': 'slash_equal_equal.liga',
+        'seq_components': ['slash_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
+        'handled_by_seq': True,
     },
-    {   # />
-        'chars': ['slash', 'greater'],
-        'firacode_ligature_name': 'slash_greater.liga',
-    },
+    # {   # />
+    #     'chars': ['slash', 'greater'],
+    #     'firacode_ligature_name': 'slash_greater.liga',
+    # },
     {   # //
         'chars': ['slash', 'slash'],
         'firacode_ligature_name': 'slash_slash.liga',
@@ -594,13 +688,177 @@ ligatures = [
     {   # _|_
         'chars': ['underscore', 'bar', 'underscore'],
         'firacode_ligature_name': 'underscore_bar_underscore.liga',
+        'seq_components': ['underscore_start.seq', 'bar_underscore_middle.seq', 'underscore_end.seq'],
     },
     {   # __
         'chars': ['underscore', 'underscore'],
         'firacode_ligature_name': 'underscore_underscore.liga',
+        'seq_components': ['underscore_start.seq', 'underscore_end.seq'],
     },
     {   # www
         'chars': ['w', 'w', 'w'],
         'firacode_ligature_name': 'w_w_w.liga',
+    },
+]
+
+seq_families = [
+    {
+        'name': 'equal_arrows',
+        'base_char': 'equal',
+        'spacer': 'equal.spacer',
+        'start_seq': 'equal_start.seq',
+        'middle_seq': 'equal_middle.seq',
+        'end_seq': 'equal_end.seq',
+        'terminators': ['greater', 'less', 'bar', 'slash'],
+        'compound_terminators': ['colon', 'exclam'],
+        'ignore_rules': {
+            'equal': [
+                # Protect == and === from Phase A spacer conversion.
+                # Phase B handles ==== and longer directly without Phase A.
+                {'lookahead': ['equal']},
+                # Protect === (triple equals) and longer fixed patterns
+                {'backtrack': ['equal'], 'lookahead': ['equal', 'equal']},
+                {'lookahead': ['equal', 'equal', 'equal']},
+                # Protect (?= (?== (?<= patterns
+                {'backtrack': ['question', 'parenleft'], 'lookahead': ['equal', 'equal']},
+                {'backtrack': ['less', 'question', 'parenleft'], 'lookahead': ['equal', 'equal']},
+                {'backtrack': ['question', 'less'], 'lookahead': ['equal', 'equal']},
+                # Protect [== ==] patterns
+                {'backtrack': ['bracketleft'], 'lookahead': ['equal', 'equal']},
+                {'lookahead': ['equal', 'equal', 'bracketright']},
+                # Protect !== :== patterns
+                {'backtrack': [['colon', 'exclam'], 'equal'], 'lookahead': ['equal', 'equal']},
+                # Protect |== /== >== <== patterns (terminator prefix)
+                {'backtrack': [['slash', 'bar', 'greater', 'less']], 'lookahead': ['equal', 'equal']},
+                {'lookahead': ['equal', 'equal', ['slash', 'bar', 'greater', 'less']]},
+                # Protect =:= =!= patterns
+                {'lookahead': ['equal', 'equal', ['colon', 'exclam'], 'equal']},
+            ],
+        },
+        # Seq assignment helper lookup mappings (from Fira Code TTX analysis)
+        'middle_lookup': {
+            'colon': 'colon_equal_middle.seq',
+            'exclam': 'exclam_equal_middle.seq',
+            'slash': 'slash_slash_equal_middle.seq',
+            'bar': 'bar_bar_equal_middle.seq',
+            'equal': 'equal_middle.seq',
+            'greater': 'greater_greater_equal_middle.seq',
+            'less': 'less_less_equal_middle.seq',
+        },
+        'end_spacer_lookup': {
+            'slash': 'slash.spacer',
+            'bar': 'bar.spacer',
+            'equal': 'equal_end.seq',
+            'greater': 'greater.spacer',
+            'less': 'less.spacer',
+        },
+        'single_term_middle_lookup': {
+            'slash': 'slash_equal_middle.seq',
+            'bar': 'bar_equal_middle.seq',
+            'equal': 'equal_start.seq',
+            'greater': 'greater_equal_middle.seq',
+            'less': 'less_equal_middle.seq',
+        },
+        'double_term_end_lookup': {
+            'slash': 'slash_slash_equal_end.seq',
+            'bar': 'bar_bar_equal_end.seq',
+            'equal': 'equal_start.seq',
+            'greater': 'greater_greater_equal_end.seq',
+            'less': 'less_less_equal_end.seq',
+        },
+        'start_spacer_lookup': {
+            'slash': 'slash.spacer',
+            'bar': 'bar.spacer',
+            'equal': 'equal_start.seq',
+            'greater': 'greater.spacer',
+            'less': 'less.spacer',
+        },
+        'single_term_end_lookup': {
+            'slash': 'slash_equal_end.seq',
+            'bar': 'bar_equal_end.seq',
+            'greater': 'greater_equal_end.seq',
+            'less': 'less_equal_end.seq',
+        },
+        'double_term_start_lookup': {
+            'slash': 'slash_slash_equal_start.seq',
+            'bar': 'bar_bar_equal_start.seq',
+            'greater': 'greater_greater_equal_start.seq',
+            'less': 'less_less_equal_start.seq',
+        },
+        'double_term_spacer_lookup': {
+            'slash': 'slash.spacer',
+            'bar': 'bar.spacer',
+            'greater': 'greater.spacer',
+            'less': 'less.spacer',
+        },
+        'single_term_start_lookup': {
+            'slash': 'slash_equal_start.seq',
+            'bar': 'bar_equal_start.seq',
+            'greater': 'greater_equal_start.seq',
+            'less': 'less_equal_start.seq',
+        },
+    },
+    {
+        'name': 'hyphen_arrows',
+        'base_char': 'hyphen',
+        'spacer': 'hyphen.spacer',
+        'start_seq': 'hyphen_start.seq',
+        'middle_seq': 'hyphen_middle.seq',
+        'end_seq': 'hyphen_end.seq',
+        'terminators': ['greater', 'less', 'bar'],
+        'compound_terminators': [],
+        'seq_handles_triple': True,
+        # No ignore rules needed: Phase A action rules require 2+ hyphens
+        # in lookahead, so -- (2-char) is naturally unaffected. Terminator
+        # patterns like |-- and <-- are handled by Phase B start rules.
+        'ignore_rules': {},
+        'middle_lookup': {
+            'hyphen': 'hyphen_middle.seq',
+            'bar': 'bar_bar_hyphen_middle.seq',
+            'greater': 'greater_greater_hyphen_middle.seq',
+            'less': 'less_less_hyphen_middle.seq',
+        },
+        'end_spacer_lookup': {
+            'hyphen': 'hyphen_end.seq',
+            'bar': 'bar.spacer',
+            'greater': 'greater.spacer',
+            'less': 'less.spacer',
+        },
+        'single_term_middle_lookup': {
+            'hyphen': 'hyphen_start.seq',
+            'bar': 'bar_hyphen_middle.seq',
+            'greater': 'greater_hyphen_middle.seq',
+            'less': 'less_hyphen_middle.seq',
+        },
+        'double_term_end_lookup': {
+            'bar': 'bar_bar_hyphen_end.seq',
+            'greater': 'greater_greater_hyphen_end.seq',
+            'less': 'less_less_hyphen_end.seq',
+        },
+        'start_spacer_lookup': {
+            'bar': 'bar.spacer',
+            'greater': 'greater.spacer',
+            'less': 'less.spacer',
+        },
+        'single_term_end_lookup': {
+            'bar': 'bar_hyphen_end.seq',
+            'greater': 'greater_hyphen_end.seq',
+            'less': 'less_hyphen_end.seq',
+        },
+        'double_term_start_lookup': {
+            'bar': 'bar_bar_hyphen_start.seq',
+            'greater': 'greater_greater_hyphen_start.seq',
+            'less': 'less_less_hyphen_start.seq',
+        },
+        'double_term_spacer_lookup': {
+            'bar': 'bar.spacer',
+            'greater': 'greater.spacer',
+            'less': 'less.spacer',
+        },
+        'single_term_start_lookup': {
+            'bar': 'bar_hyphen_start.seq',
+            'greater': 'greater_hyphen_start.seq',
+            'less': 'less_hyphen_start.seq',
+        },
     },
 ]
