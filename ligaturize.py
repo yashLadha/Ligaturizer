@@ -426,12 +426,14 @@ class LigatureCreator(object):
             self.font.addContextualSubtable(calt, sub_name, 'glyph', spec)
 
         seq_glyphs = [family['start_seq'], family['middle_seq']]
-        # Include all .seq glyphs from lookup mappings so Phase B rules
-        # fire when any family seq glyph is in backtrack context.
-        for key in ('middle_lookup', 'end_spacer_lookup', 'single_term_middle_lookup',
-                    'double_term_end_lookup', 'start_spacer_lookup',
-                    'single_term_end_lookup', 'double_term_start_lookup',
-                    'double_term_spacer_lookup', 'single_term_start_lookup'):
+        # Include start and middle .seq glyphs from lookup mappings so
+        # Phase B rules fire when any active family seq glyph is in
+        # backtrack context. Exclude *_end.seq glyphs: once a sequence
+        # is terminated, subsequent characters must not see a live seq
+        # context (matching Fira Code's backtrack behavior).
+        for key in ('middle_lookup', 'single_term_middle_lookup',
+                    'start_spacer_lookup', 'double_term_start_lookup',
+                    'single_term_start_lookup'):
             if key in family:
                 for glyph_name in family[key].values():
                     if glyph_name.endswith('.seq') and glyph_name not in seq_glyphs:
