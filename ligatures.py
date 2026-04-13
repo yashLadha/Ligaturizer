@@ -425,7 +425,6 @@ ligatures = [
         'chars': ['less', 'equal'],
         'firacode_ligature_name': 'less_equal.liga',
         'seq_components': ['less_equal_start.seq', 'equal_end.seq'],
-        'handled_by_seq': True,
     },
     {   # <=|
         'chars': ['less', 'equal', 'bar'],
@@ -711,6 +710,10 @@ seq_families = [
         'end_seq': 'equal_end.seq',
         'terminators': ['greater', 'less', 'bar', 'slash'],
         'compound_terminators': ['colon', 'exclam'],
+        # Terminators whose 2-char ligature (e.g. <=, >=) uses a .liga glyph.
+        # The seq start rules will require a longer lookahead for these so
+        # the fixed .liga ligature handles the 2-char case instead.
+        'liga_terminators': ['less', 'greater'],
         'ignore_rules': {
             'equal': [
                 # Protect == and === from Phase A spacer conversion.

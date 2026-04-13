@@ -494,9 +494,18 @@ class LigatureCreator(object):
                 base, start_base_lk, spacer, base, target))
 
         # Start: single terminator
+        liga_terms = set(family.get('liga_terminators', []))
         for t in terminators:
-            add_rule(calt_b, '| %s @<%s> | %s' % (t, single_term_start_lk, base))
-            add_rule(calt_b, '| %s @<%s> | %s' % (t, single_term_start_lk, spacer))
+            if t in liga_terms:
+                # This terminator has a .liga for the 2-char case (e.g. <=, >=).
+                # Only enter seq mode when followed by base + more seq content,
+                # so the fixed .liga handles the bare 2-char case.
+                for la in [base, spacer] + terminators + compound_terminators:
+                    add_rule(calt_b, '| %s @<%s> | %s %s' % (t, single_term_start_lk, base, la))
+                    add_rule(calt_b, '| %s @<%s> | %s %s' % (t, single_term_start_lk, spacer, la))
+            else:
+                add_rule(calt_b, '| %s @<%s> | %s' % (t, single_term_start_lk, base))
+                add_rule(calt_b, '| %s @<%s> | %s' % (t, single_term_start_lk, spacer))
 
         # Start: double terminator
         for t in terminators:
