@@ -424,7 +424,6 @@ ligatures = [
     {   # <=
         'chars': ['less', 'equal'],
         'firacode_ligature_name': 'less_equal.liga',
-        'seq_components': ['less_equal_start.seq', 'equal_end.seq'],
     },
     {   # <=|
         'chars': ['less', 'equal', 'bar'],
