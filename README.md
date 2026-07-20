@@ -4,6 +4,8 @@
 
 **Add ligatures to any coding font!**
 
+> **This fork:** adds the latest [Fira Code](https://github.com/tonsky/FiraCode) (6.2) ligatures to [Source Code Pro](https://github.com/adobe-fonts/source-code-pro). The ligaturized fonts (`LigaSrcPro-*.ttf`, all weights and italics) are available in [`fonts/output/`](fonts/output/).
+
 This script copies the ligatures (glyphs and rendering information) from [Fira Code](https://github.com/tonsky/FiraCode) into any other TrueType or OpenType font. (Note that the ligatures are scale-corrected, but otherwise copied as is from Fira Code; it doesn't create new ligature graphics based on the font you're modifying.)
 
 This repo contains a [Fontforge python script](ligaturize.py) that you can use to add the Fira Code ligatures to any font, as well as submodules for some popular coding fonts and [another script](build.py) for ligaturizing all of them at once.
