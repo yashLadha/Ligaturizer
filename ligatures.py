@@ -254,12 +254,12 @@ ligatures = [
         'seq_components': ['equal_start.seq', 'less_less_equal_end.seq'],
         'handled_by_seq': True,
     },
-    {   # =/=
-        'chars': ['equal', 'slash', 'equal'],
-        'firacode_ligature_name': 'equal_slash_equal.liga',
-        'seq_components': ['equal_start.seq', 'slash_equal_middle.seq', 'equal_end.seq'],
-        'handled_by_seq': True,
-    },
+    # {   # =/=
+    #     'chars': ['equal', 'slash', 'equal'],
+    #     'firacode_ligature_name': 'equal_slash_equal.liga',
+    #     'seq_components': ['equal_start.seq', 'slash_equal_middle.seq', 'equal_end.seq'],
+    #     'handled_by_seq': True,
+    # },
     {   # !=
         'chars': ['exclam', 'equal'],
         'firacode_ligature_name': 'exclam_equal.liga',
@@ -659,18 +659,18 @@ ligatures = [
         'chars': ['slash', 'backslash'],
         'firacode_ligature_name': 'slash_backslash.liga',
     },
-    {   # /=
-        'chars': ['slash', 'equal'],
-        'firacode_ligature_name': 'slash_equal.liga',
-        'seq_components': ['slash_equal_start.seq', 'equal_end.seq'],
-        'handled_by_seq': True,
-    },
-    {   # /==
-        'chars': ['slash', 'equal', 'equal'],
-        'firacode_ligature_name': 'slash_equal_equal.liga',
-        'seq_components': ['slash_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
-        'handled_by_seq': True,
-    },
+    # {   # /=
+    #     'chars': ['slash', 'equal'],
+    #     'firacode_ligature_name': 'slash_equal.liga',
+    #     'seq_components': ['slash_equal_start.seq', 'equal_end.seq'],
+    #     'handled_by_seq': True,
+    # },
+    # {   # /==
+    #     'chars': ['slash', 'equal', 'equal'],
+    #     'firacode_ligature_name': 'slash_equal_equal.liga',
+    #     'seq_components': ['slash_equal_start.seq', 'equal_middle.seq', 'equal_end.seq'],
+    #     'handled_by_seq': True,
+    # },
     # {   # />
     #     'chars': ['slash', 'greater'],
     #     'firacode_ligature_name': 'slash_greater.liga',
@@ -707,7 +707,9 @@ seq_families = [
         'start_seq': 'equal_start.seq',
         'middle_seq': 'equal_middle.seq',
         'end_seq': 'equal_end.seq',
-        'terminators': ['greater', 'less', 'bar', 'slash'],
+        # NOTE: 'slash' removed as a terminator to avoid ligating '=/'
+        # (common in bash, e.g. PATH=/usr/bin) and '/=' '/==' '=/=' etc.
+        'terminators': ['greater', 'less', 'bar'],
         'compound_terminators': ['colon', 'exclam'],
         # Terminators whose 2-char ligature (e.g. <=, >=) uses a .liga glyph.
         # The seq start rules will require a longer lookahead for these so
@@ -741,60 +743,51 @@ seq_families = [
         'middle_lookup': {
             'colon': 'colon_equal_middle.seq',
             'exclam': 'exclam_equal_middle.seq',
-            'slash': 'slash_slash_equal_middle.seq',
             'bar': 'bar_bar_equal_middle.seq',
             'equal': 'equal_middle.seq',
             'greater': 'greater_greater_equal_middle.seq',
             'less': 'less_less_equal_middle.seq',
         },
         'end_spacer_lookup': {
-            'slash': 'slash.spacer',
             'bar': 'bar.spacer',
             'equal': 'equal_end.seq',
             'greater': 'greater.spacer',
             'less': 'less.spacer',
         },
         'single_term_middle_lookup': {
-            'slash': 'slash_equal_middle.seq',
             'bar': 'bar_equal_middle.seq',
             'equal': 'equal_start.seq',
             'greater': 'greater_equal_middle.seq',
             'less': 'less_equal_middle.seq',
         },
         'double_term_end_lookup': {
-            'slash': 'slash_slash_equal_end.seq',
             'bar': 'bar_bar_equal_end.seq',
             'equal': 'equal_start.seq',
             'greater': 'greater_greater_equal_end.seq',
             'less': 'less_less_equal_end.seq',
         },
         'start_spacer_lookup': {
-            'slash': 'slash.spacer',
             'bar': 'bar.spacer',
             'equal': 'equal_start.seq',
             'greater': 'greater.spacer',
             'less': 'less.spacer',
         },
         'single_term_end_lookup': {
-            'slash': 'slash_equal_end.seq',
             'bar': 'bar_equal_end.seq',
             'greater': 'greater_equal_end.seq',
             'less': 'less_equal_end.seq',
         },
         'double_term_start_lookup': {
-            'slash': 'slash_slash_equal_start.seq',
             'bar': 'bar_bar_equal_start.seq',
             'greater': 'greater_greater_equal_start.seq',
             'less': 'less_less_equal_start.seq',
         },
         'double_term_spacer_lookup': {
-            'slash': 'slash.spacer',
             'bar': 'bar.spacer',
             'greater': 'greater.spacer',
             'less': 'less.spacer',
         },
         'single_term_start_lookup': {
-            'slash': 'slash_equal_start.seq',
             'bar': 'bar_equal_start.seq',
             'greater': 'greater_equal_start.seq',
             'less': 'less_equal_start.seq',
