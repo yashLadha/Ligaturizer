@@ -103,31 +103,24 @@ SYNTH_FAMILY = {
     'ignore_rules': {'equal': [{'lookahead': ['equal']}]},
 }
 
-# What the helper must produce for the real equal_arrows family. This is
-# the exact set the pre-refactor inline code (ligaturize.py, the 5-key
-# whitelist) produced, pinning refactor equivalence.
-EQUAL_ARROWS_BACKTRACK_GLYPHS = [
-    'bar_bar_equal_middle.seq',
-    'bar_bar_equal_start.seq',
-    'bar_equal_middle.seq',
-    'bar_equal_start.seq',
-    'colon_equal_middle.seq',
-    'equal_middle.seq',
-    'equal_start.seq',
-    'exclam_equal_middle.seq',
-    'greater_equal_middle.seq',
-    'greater_equal_start.seq',
-    'greater_greater_equal_middle.seq',
-    'greater_greater_equal_start.seq',
-    'less_equal_middle.seq',
-    'less_equal_start.seq',
-    'less_less_equal_middle.seq',
-    'less_less_equal_start.seq',
-    'slash_equal_middle.seq',
-    'slash_equal_start.seq',
-    'slash_slash_equal_middle.seq',
-    'slash_slash_equal_start.seq',
-]
+# Independent oracle for real families: the pre-refactor inline code
+# (the 5-key whitelist that lived in add_seq_ligature) expressed the
+# same intent via hardcoded lookup key names. The helper must stay
+# equivalent to it for every real family config, so this pins refactor
+# equivalence without hardcoding glyph lists that go stale whenever
+# ligatures.py is edited.
+LEGACY_WHITELIST_KEYS = (
+    'middle_lookup', 'single_term_middle_lookup', 'start_spacer_lookup',
+    'double_term_start_lookup', 'single_term_start_lookup')
+
+
+def legacy_backtrack_glyphs(family):
+    expected = {family['start_seq'], family['middle_seq']}
+    for key in LEGACY_WHITELIST_KEYS:
+        for glyph_name in family.get(key, {}).values():
+            if glyph_name.endswith('.seq'):
+                expected.add(glyph_name)
+    return sorted(expected)
 
 
 class TestFamilyBacktrackSeqGlyphs(BaseTestCase):
@@ -158,9 +151,11 @@ class TestFamilyBacktrackSeqGlyphs(BaseTestCase):
         result = self.helper(SYNTH_FAMILY)
         self.assertNotIn('x.spacer', result)  # spacers are not seq context
 
-    def test_equal_arrows_exact_set(self):
-        self.assertEqual(sorted(self.helper(equal_arrows_family())),
-                         EQUAL_ARROWS_BACKTRACK_GLYPHS)
+    def test_all_real_families_match_legacy_whitelist_behavior(self):
+        for family in ligatures.seq_families:
+            with self.subTest(family=family['name']):
+                self.assertEqual(self.helper(family),
+                                 legacy_backtrack_glyphs(family))
 
 
 class TestSeqRuleBacktrackBehavior(BaseTestCase):
