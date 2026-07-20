@@ -531,10 +531,10 @@ ligatures = [
     #     'chars': ['less', 'slash'],
     #     'firacode_ligature_name': 'less_slash.liga',
     # },
-    {   # </>
-        'chars': ['less', 'slash', 'greater'],
-        'firacode_ligature_name': 'less_slash_greater.liga',
-    },
+    # {   # </>
+    #     'chars': ['less', 'slash', 'greater'],
+    #     'firacode_ligature_name': 'less_slash_greater.liga',
+    # },
     {   # #{
         'chars': ['numbersign', 'braceleft'],
         'firacode_ligature_name': 'numbersign_braceleft.liga',
