@@ -44,6 +44,28 @@ def get_ligature_source(fontname):
         return 'fonts/fira/distr/ttf/FiraCode-Bold.ttf'
     return 'fonts/fira/distr/ttf/FiraCode-Regular.ttf'
 
+def family_backtrack_seq_glyphs(family):
+    """Seq glyphs of a family that mean 'a sequence is still in progress'.
+
+    Used as backtrack context for both the family's own Phase B rules and
+    the seq-aware ignore rules on fixed ligatures. Start and middle glyphs
+    are live context; *_end.seq glyphs are excluded -- once a sequence is
+    terminated, following characters must not see a live seq context
+    (matching Fira Code's backtrack behavior).
+
+    Collects from every dict-valued key in the family config (the lookup
+    mappings), so new lookup keys are picked up automatically.
+    """
+    glyphs = {family['start_seq'], family['middle_seq']}
+    for value in family.values():
+        if isinstance(value, dict):
+            for glyph_name in value.values():
+                if (isinstance(glyph_name, str)
+                        and glyph_name.endswith('.seq')
+                        and not glyph_name.endswith('_end.seq')):
+                    glyphs.add(glyph_name)
+    return sorted(glyphs)
+
 class LigatureCreator(object):
 
     def __init__(self, font, firacode,
@@ -192,18 +214,23 @@ class LigatureCreator(object):
         self._lig_counter += 1
         ligature_name = 'lig.{}'.format(self._lig_counter)
 
-        if seq_components:
-            # Fira Code v6: compose from .seq glyph components
-            if not self.compose_seq_ligature(seq_components, ligature_name):
-                return
-        else:
-            # Traditional: copy single .liga glyph
-            if not self.copy_ligature_from_source(firacode_ligature_name):
-                return
+        # Prefer the pre-drawn .liga glyph when the source font has one:
+        # it is the authoritative artwork. seq_components is only a
+        # fallback for ligatures whose .liga glyph Fira Code v6 dropped
+        # in favor of .seq parts, so a stale seq_components field is
+        # harmless when the .liga glyph exists.
+        if self.copy_ligature_from_source(firacode_ligature_name):
             self.font.createChar(-1, ligature_name)
             self.font.selection.none()
             self.font.selection.select(ligature_name)
             self.font.paste()
+        elif seq_components:
+            # Fira Code v6: compose from .seq glyph components
+            if not self.compose_seq_ligature(seq_components, ligature_name):
+                return
+        else:
+            # Not available in the source font at all; skip this ligature.
+            return
 
         self.correct_ligature_width(self.font[ligature_name])
 
@@ -271,25 +298,16 @@ class LigatureCreator(object):
         # preceded by a .seq glyph from the same family, so seq rules
         # take priority in active seq contexts (e.g. prevent === from
         # firing after < in <===).
-        from ligatures import seq_families
         for family in seq_families:
             if input_chars[0] != family['base_char']:
                 continue
             vocab = set([family['base_char']] + family['terminators']
                         + family.get('compound_terminators', []))
             if not all(c in vocab for c in input_chars):
-                break
-            # Collect all .seq glyphs from this family for backtrack
-            family_seq = set()
-            family_seq.add(family['start_seq'])
-            family_seq.add(family['middle_seq'])
-            for key in ('middle_lookup', 'single_term_middle_lookup',
-                        'single_term_start_lookup', 'double_term_start_lookup'):
-                if key in family:
-                    for gn in family[key].values():
-                        if gn.endswith('.seq'):
-                            family_seq.add(gn)
-            for seq_glyph in sorted(family_seq):
+                # Not representable in this family's vocabulary; other
+                # families may still match.
+                continue
+            for seq_glyph in family_backtrack_seq_glyphs(family):
                 self.add_calt(calt_lookup_name,
                     'calt.{}.{}'.format(self._lig_counter, i+3),
                     '{seq} | {first} | {rest}',
@@ -425,19 +443,9 @@ class LigatureCreator(object):
             st_idx[0] += 1
             self.font.addContextualSubtable(calt, sub_name, 'glyph', spec)
 
-        seq_glyphs = [family['start_seq'], family['middle_seq']]
-        # Include start and middle .seq glyphs from lookup mappings so
-        # Phase B rules fire when any active family seq glyph is in
-        # backtrack context. Exclude *_end.seq glyphs: once a sequence
-        # is terminated, subsequent characters must not see a live seq
-        # context (matching Fira Code's backtrack behavior).
-        for key in ('middle_lookup', 'single_term_middle_lookup',
-                    'start_spacer_lookup', 'double_term_start_lookup',
-                    'single_term_start_lookup'):
-            if key in family:
-                for glyph_name in family[key].values():
-                    if glyph_name.endswith('.seq') and glyph_name not in seq_glyphs:
-                        seq_glyphs.append(glyph_name)
+        # Backtrack context: start and middle .seq glyphs mean an active
+        # sequence; end glyphs are excluded (see family_backtrack_seq_glyphs).
+        seq_glyphs = family_backtrack_seq_glyphs(family)
 
         def add_seq_rules(calt, spec_template):
             for sg in seq_glyphs:
