@@ -711,6 +711,11 @@ seq_families = [
         # (common in bash, e.g. PATH=/usr/bin) and '/=' '/==' '=/=' etc.
         'terminators': ['greater', 'less', 'bar'],
         'compound_terminators': ['colon', 'exclam'],
+        # Terminators that must NOT ligate as the bare 2-char 'base + term'
+        # sequence. 'less' stays a terminator so that longer arrows such as
+        # '=<<' (and the '<'-prefixed <=, <==, <=> ... starts) keep working,
+        # but the bare '=<' reads poorly, so it is left as two plain glyphs.
+        'no_short_terminators': ['less'],
         # Terminators whose 2-char ligature (e.g. <=, >=) uses a .liga glyph.
         # The seq start rules will require a longer lookahead for these so
         # the fixed .liga ligature handles the 2-char case instead.

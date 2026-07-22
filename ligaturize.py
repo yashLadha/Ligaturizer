@@ -475,9 +475,19 @@ class LigatureCreator(object):
         start_inputs = [base, spacer]
 
         # Start: base/spacer followed by terminator (e.g. =>, =|)
+        # Terminators listed in no_short_terminators (e.g. 'less' for '=<')
+        # are deliberately NOT ligated as the bare 2-char base+terminator:
+        # they only enter seq mode when the terminator is itself followed by
+        # more sequence content (e.g. '=<<'), so the bare '=<' is left as two
+        # plain glyphs while longer arrows keep working.
+        no_short_terminators = set(family.get('no_short_terminators', []))
         for si in start_inputs:
             for target in terminators + compound_terminators:
-                add_rule(calt_b, '| %s @<%s> | %s' % (si, start_base_lk, target))
+                if target in no_short_terminators:
+                    for la in [base, spacer] + terminators + compound_terminators:
+                        add_rule(calt_b, '| %s @<%s> | %s %s' % (si, start_base_lk, target, la))
+                else:
+                    add_rule(calt_b, '| %s @<%s> | %s' % (si, start_base_lk, target))
 
         # Start: base/spacer followed by base+terminator (e.g. ==>)
         for si in start_inputs:

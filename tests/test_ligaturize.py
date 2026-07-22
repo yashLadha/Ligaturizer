@@ -299,5 +299,61 @@ class TestSeqIgnoreRuleFamilyLoop(BaseTestCase):
         self.assertTrue(self.specs_for('f2_start.seq', font))
 
 
+# ---------------------------------------------------------------------------
+# Disable the bare 2-char '=<' ligature while keeping <=, =<<, =>
+# ---------------------------------------------------------------------------
+
+class TestDisableEqualLessLigature(BaseTestCase):
+    """The equal_arrows family lists 'less' as a terminator, which makes
+    '=' + '<' ligate into an arrow-like glyph that reads poorly. We disable
+    only the bare 2-char '=<' by listing 'less' in the family's
+    no_short_terminators: the base->start.seq conversion must not fire for a
+    lone trailing terminator, but must still fire when it is part of a longer
+    sequence ('=<<') and for other terminators ('=>').
+    """
+
+    def start_base_rules(self, font):
+        """(input_glyph, lookahead_tokens) for every base->start.seq rule.
+
+        These are the equal_arrows Phase B 'start' rules, identified by the
+        'basestart' single-subst lookup they invoke. The recorded spec has
+        the form 'backtrack | input @<lookup> | lookahead'.
+        """
+        rules = []
+        for (_lookup, _sub, spec) in font.calt_rules:
+            if 'basestart' not in spec:
+                continue
+            parts = spec.split('|')
+            if len(parts) < 3:
+                continue
+            input_glyph = parts[1].split()[0]
+            lookahead = parts[2].split()
+            rules.append((input_glyph, lookahead))
+        return rules
+
+    def rules(self):
+        creator, font, firacode = make_creator()
+        quiet(creator.add_seq_ligature, equal_arrows_family())
+        return self.start_base_rules(font)
+
+    def test_bare_equal_less_does_not_enter_seq(self):
+        rules = self.rules()
+        self.assertNotIn(('equal', ['less']), rules,
+            "bare '=<' must not convert '=' to a seq start glyph")
+        self.assertNotIn(('equal.spacer', ['less']), rules,
+            "bare '=<' must not convert a spacer '=' to a seq start glyph")
+
+    def test_equal_greater_still_enters_seq(self):
+        # '=>' is unaffected: greater is not a no_short_terminator.
+        self.assertIn(('equal', ['greater']), self.rules(),
+            "'=>' regressed: '=' no longer enters seq mode before '>'")
+
+    def test_equal_less_less_still_enters_seq(self):
+        # '=<<' must still ligate: '=' enters seq mode when 'less' is
+        # followed by more sequence content.
+        self.assertIn(('equal', ['less', 'less']), self.rules(),
+            "'=<<' regressed: '=' no longer enters seq mode before '<<'")
+
+
 if __name__ == '__main__':
     unittest.main()
