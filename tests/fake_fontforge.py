@@ -32,9 +32,17 @@ class FakeGlyph(object):
         self.right_side_bearing = 0
         self.transforms = []        # recorded psMat matrices
         self.pasted_from = None     # glyph name last pasted into this glyph
+        self.references = ()        # composite references, like real fontforge
+        self.unlinked = False       # set once unlinkRef() has flattened refs
 
     def transform(self, matrix):
         self.transforms.append(matrix)
+
+    def unlinkRef(self, refname=None):
+        # Flatten references into contours. The fake has no real outline
+        # model, so just record that flattening happened and drop the refs.
+        self.references = ()
+        self.unlinked = True
 
     def addPosSub(self, subtable_name, target):
         # Recorded on the owning font by FakeFont.__getitem__ wiring.

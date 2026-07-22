@@ -85,6 +85,17 @@ class LigatureCreator(object):
         try:
             self.firacode.selection.none()
             self.firacode.selection.select(ligature_name)
+            # Fira Code v6 ligature glyphs are frequently composed of
+            # references to other glyphs (e.g. less_equal.liga references
+            # greater_equal.liga; asterisk_asterisk.liga references two
+            # 'asterisk' glyphs). Copying those references into the output
+            # font produces dangling references, because the referenced
+            # glyphs either don't exist there or are a different shape. A
+            # dangling reference corrupts the pasted glyph and makes
+            # FontForge crash while numbering points during TTF generation
+            # (SCNumberPoints). Flatten references into real contours in the
+            # source before copying so we only ever copy standalone outlines.
+            self.firacode[ligature_name].unlinkRef()
             self.firacode.copy()
             return True
         except ValueError:
