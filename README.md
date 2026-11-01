@@ -16,7 +16,7 @@ cd Ligaturizer
 make
 ```
 
-The ligaturized fonts are written to `fonts/output/`. To build without installing FontForge locally, see [Docker](#docker).
+The ligaturized fonts are written to `fonts/output/`. `make` needs the Fira Code TTFs described in [Requirements](#requirements) and stops with an error if they are missing. To fetch them and build in Docker in one step, without installing FontForge locally, run `./build-fonts.sh` (see [build-fonts.sh](#build-fontssh)).
 
 ## Examples
 
@@ -28,7 +28,7 @@ This fork's Source Code Pro in Regular (`LigaSrcPro-Regular`) and Italic (`LigaS
 ## Requirements
 
 - **Submodules:** the coding fonts and Fira Code are git submodules, so clone with `--recurse-submodules`.
-- **Fira Code TTFs:** by default the ligatures are read from `fonts/fira/distr/ttf/FiraCode-<Weight>.ttf`, picked to match the input font's weight. The Fira Code 6.2 source checkout does not include these files; copy the `ttf/` folder from the Fira Code release there, or pass `--ligature-font-file` (see [Manual](#manual-ligaturizepy)).
+- **Fira Code TTFs:** by default the ligatures are read from `fonts/fira/distr/ttf/FiraCode-<Weight>.ttf`, picked to match the input font's weight. The Fira Code 6.2 source checkout does not include these files; copy the `ttf/` folder from the [Fira Code 6.2 release zip](https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip) there, or pass `--ligature-font-file` (see [Manual](#manual-ligaturizepy)). [`build-fonts.sh`](#build-fontssh) does this for you.
 - **FontForge with Python bindings:**
 
   | Platform | Install |
@@ -37,7 +37,7 @@ This fork's Source Code Pro in Regular (`LigaSrcPro-Regular`) and Italic (`LigaS
   | openSUSE, NixOS | `fontforge` package (bindings included) |
   | macOS | `brew install fontforge` |
 
-- **fontTools for Python 3:** used by `postprocess.py`, which `make` runs on every generated font. `make` does not fail without it, but the post-processing step is skipped.
+- **fontTools for Python 3:** used by `postprocess.py`, which `make` runs on every generated font. `make` fails if it is missing.
 - **Editor support:** see the [Fira Code README](https://github.com/tonsky/FiraCode) for editors that render ligatures.
 
 As an alternative to installing these locally, use the [Docker](#docker) image.
@@ -61,6 +61,8 @@ As an alternative to installing these locally, use the [Docker](#docker) image.
 | `make all` | Both of the above |
 | `make release` | `clean`, `all`, then zips both into `LigaturizedFonts.zip` and `LigaturizedFontsWithCharacters.zip` |
 | `make clean` | Removes generated fonts and zips |
+
+`make` fails loudly: it exits non-zero if the Fira Code TTFs are missing, if FontForge or `build.py` fails, or if `postprocess.py` fails on any generated font.
 
 ### Manual (ligaturize.py)
 
@@ -124,6 +126,26 @@ Any other `make` target works the same way, e.g. a full release zip:
 ```sh
 docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work ligaturizer make release
 ```
+
+### build-fonts.sh
+
+`build-fonts.sh` builds the fonts end to end with Docker, starting from a fresh clone, and can be run from any directory. It needs `docker`, `git`, `curl` and `unzip`. It:
+
+1. Initializes the `fonts/fira` and `fonts/source-code-pro` submodules.
+2. Downloads the Fira Code 6.2 release and unpacks its TTFs into `fonts/fira/distr/ttf/`, unless they are already there.
+3. Builds the `ligaturizer` image and runs the build in it as your own uid/gid.
+4. Exits non-zero unless the run produced new `LigaSrcPro-*.ttf` files in `fonts/output/`, then lists them.
+
+```sh
+./build-fonts.sh
+```
+
+| Option | Description |
+| --- | --- |
+| `--target NAME` | Run `make NAME` in the container instead of the default build, e.g. `all` or `release`. The target must write `LigaSrcPro-*.ttf` to `fonts/output/`, or the output check fails. |
+| `--skip-image` | Reuse an existing `ligaturizer` image instead of rebuilding it. |
+| `--install` | Copy `fonts/output/*.ttf` into `~/Library/Fonts` on macOS or `~/.local/share/fonts` on Linux, then run `fc-cache -f` there if it is available. |
+| `-h`, `--help` | Show usage. |
 
 ## Pre-built fonts
 
