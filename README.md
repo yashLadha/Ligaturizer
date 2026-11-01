@@ -1,3 +1,5 @@
+<p align="center"><img src="images/logo.svg" alt="Ligaturizer logo" width="420"></p>
+
 # Ligaturizer
 
 ![Code sample filter(x -> x % 2 != 0) rendered with -> and != ligatures](images/banner.png)

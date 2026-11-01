@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 616 128" width="616" height="128">
+  <title>Ligaturizer</title>
+  <defs>
+    <linearGradient id="fuse" x1="24" y1="0" x2="98" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0.2" stop-color="#5ab4dc"/>
+      <stop offset="0.8" stop-color="#b07ee0"/>
+    </linearGradient>
+  </defs>
+  <rect width="616" height="128" rx="28" fill="#282c34"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(10 0)">
+      <g stroke-width="7" stroke-opacity="0.5">
+        <path d="M27 32H51" stroke="#5ab4dc"/>
+        <path d="M77 23L91 32L77 41" stroke="#b07ee0"/>
+      </g>
+      <g stroke-width="12">
+        <path d="M26 80H92" stroke="url(#fuse)"/>
+        <path d="M72 56L98 80L72 104" stroke="#b07ee0"/>
+      </g>
+    </g>
+    <g transform="translate(146 0)" stroke-width="8">
+      <path stroke="#5ab4dc" d="M8 24V80H32M50 44H60V80M48 80H72M112 62A12 18 0 1 1 88 62A12 18 0 1 1 112 62M112 44V90Q112 104 98 104H90M152 62A12 18 0 1 1 128 62A12 18 0 1 1 152 62M152 44V80"/>
+      <path stroke="#dfe3ea" d="M176 26V68Q176 80 186 80H192M166 44H190M208 44V64Q208 80 220 80Q232 80 232 64M232 44V80M252 44V80M252 62Q252 44 268 44H272M290 44H300V80M288 80H312M328 44H352L328 80H352M368 62H392A12 18 0 0 0 368 62Q368 80 382 80H391M412 44V80M412 62Q412 44 428 44H432"/>
+    </g>
+  </g>
+  <g transform="translate(146 0)">
+    <circle cx="60" cy="28" r="5.5" fill="#5ab4dc"/>
+    <circle cx="300" cy="28" r="5.5" fill="#dfe3ea"/>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>Ligaturizer</title>
+  <defs>
+    <linearGradient id="fuse" x1="24" y1="0" x2="98" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0.2" stop-color="#5ab4dc"/>
+      <stop offset="0.8" stop-color="#b07ee0"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#282c34"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="7" stroke-opacity="0.5">
+      <path d="M27 32H51" stroke="#5ab4dc"/>
+      <path d="M77 23L91 32L77 41" stroke="#b07ee0"/>
+    </g>
+    <g stroke-width="12">
+      <path d="M26 80H92" stroke="url(#fuse)"/>
+      <path d="M72 56L98 80L72 104" stroke="#b07ee0"/>
+    </g>
+  </g>
+</svg>
