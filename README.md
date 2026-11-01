@@ -18,10 +18,10 @@ The ligaturized fonts are written to `fonts/output/`. To build without installin
 
 ## Examples
 
-SF Mono and Menlo with ligatures (note the `!=` and `->`):
+This fork's Source Code Pro in Regular (`LigaSrcPro-Regular`) and Italic (`LigaSrcPro-It`), with ligatures for `->` and `!=`:
 
-![SF Mono with Fira Code ligatures for != and ->](images/sf-mono.png)
-![Menlo with Fira Code ligatures for != and ->](images/menlo.png)
+![Source Code Pro with Fira Code ligatures for != and ->](images/source-code-pro.png)
+![Source Code Pro Italic with Fira Code ligatures for != and ->](images/source-code-pro-italic.png)
 
 ## Requirements
 
