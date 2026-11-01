@@ -16,3 +16,7 @@
 [submodule "fonts/Montserrat"]
 	path = fonts/Montserrat
 	url = https://github.com/JulietaUla/Montserrat.git
+[submodule "fonts/source-code-pro"]
+	path = fonts/source-code-pro
+	url = https://github.com/adobe-fonts/source-code-pro.git
+	shallow = true
