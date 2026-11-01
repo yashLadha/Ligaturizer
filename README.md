@@ -23,6 +23,8 @@ Here's a couple examples of the fonts generated: SF Mono & Menlo with ligatures 
 
 **Script**: This script requires FontForge python bindings. For Debian/Ubuntu they are available in `python-fontforge` package. For OpenSUSE and NixOS, they are included in the `fontforge` package. For macOS, they are available via brew (`brew install fontforge`).
 
+**Docker**: As an alternative to installing FontForge locally, you can build the fonts in a Docker container; see [Docker](#docker) below.
+
 ## Using the Script ##
 ### Automatic ###
 
@@ -59,6 +61,34 @@ Use automatic mode to easily convert 1 or more font(s).
 The font weight will be inherited from the original file; the font name will be replaced with whatever you specified in `--output-name`. You can also use `--prefix` instead, in which case the original name will be preserved and whatever you put in `--prefix` will be prepended to it.
 
 `ligatures.py` supports some additional command line options to (e.g.) change which font ligatures are copied from or enable copying of individual character glyphs; run `fontforge -lang=py ligaturize.py --help` to list them.
+
+### Docker ###
+
+The included `Dockerfile` provides FontForge with its Python bindings, fonttools, `make` and `zip`, so nothing else needs to be installed on the host. The repo is bind-mounted into the container at run time, so make sure the submodules are checked out first (see [Requirements](#requirements)).
+
+1.  Build the image from the repo root:
+
+    ```
+    $ docker build -t ligaturizer .
+    ```
+1.  Run the default build (equivalent to `make`). Running as your own uid/gid keeps the generated files in `fonts/output/` from being owned by root:
+
+    ```
+    $ docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work ligaturizer
+    ```
+
+To run the unit tests instead of a build:
+
+```
+$ docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work ligaturizer \
+    python3 -m unittest discover -s tests -v
+```
+
+Any other `make` target can be run the same way, e.g. a full release zip:
+
+```
+$ docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/work ligaturizer make release
+```
 
 ## Misc. ##
 ### Credit ###
